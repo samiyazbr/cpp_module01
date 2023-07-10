@@ -10,9 +10,9 @@ class HumanA
         std::string name;
         Weapon &weapon;
     public:
-        HumanA(std::string &name, Weapon &weapon_);
+        HumanA(std::string name, Weapon &weapon_);
         void attack(void);
-        void setWeapon(Weapon &weapon);
+        void set_Weapon(Weapon &weapon_);
 };
 
 #endif
