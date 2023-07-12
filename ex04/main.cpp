@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <cstdlib> // for exit()
 
 int main(int ac, char **av)
 {
@@ -35,12 +36,39 @@ int main(int ac, char **av)
 	{
 		newfilename = filename + ".replace";
 	}
-	while (file.is_open())
+	while (file.get(ch))
 	{
-		file.get(ch);
-		if (file.is_open())
-			content.push_back(ch);
+		content.push_back(ch);
 	}
+
 	file.close();
-	std::ofstream newfile(newfilename); //output file stream 
+
+	std::ofstream newfile(newfilename);
+	if (newfile.is_open())
+	{
+		std::string modified_content;
+
+		size_t startPos = 0;
+		size_t foundPos = content.find(str1);
+		while (foundPos != std::string::npos)
+		{
+			modified_content += content.substr(startPos, foundPos - startPos);
+			modified_content += str2;
+
+			startPos = foundPos + str1.length();
+			foundPos = content.find(str1, startPos);
+		}
+
+		modified_content += content.substr(startPos);
+
+		newfile << modified_content; // writing content to the new file
+		newfile.close();
+	}
+	else
+	{
+		std::cerr << "Failed to create output file" << std::endl;
+		exit(EXIT_FAILURE);
+	}
+
+	return 0;
 }
