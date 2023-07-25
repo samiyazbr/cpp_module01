@@ -37,14 +37,3 @@ void Harl::error(void)
 	std::cout << "ERROR: " << std::endl;
 	std::cout << "This is unacceptable! I want to speak to the manager now." << std::endl;
 }
-
-void Harl::complain(std::string level)
-{
-	void (Harl::*function_pointer[4]) (void) = {&Harl::debug , &Harl::info, &Harl::warning, &Harl::error}; //ReturnType (ClassName::*PointerName)(ParameterTypes...); this is how pointer to member function is made
-
-	std::string levels[4] = {"DEBUG", "INFO", "WARNING", "ERROR"};
-	int i = 0;
-	while (i < 4 && levels[i] != level)
-		i++;
-	(this->*function_pointer[i])();
-}
